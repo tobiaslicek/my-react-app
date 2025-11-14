@@ -1,20 +1,18 @@
-import { useState } from 'react';
 import type { TTodoItem } from '../types';
 import './App.css';
-import reactLogo from './assets/react.svg';
 import { TodoItem } from './components/TodoItem';
-import viteLogo from '/vite.svg';
 
 const MOCK_DATA: TTodoItem[] = [
-  { title: 'x', id: '2', isChecked: true },
-  { title: 'y', id: '3', isChecked: true },
+  { title: 'Dojít na nákup', id: '2', isChecked: true },
+  { title: 'Zaplatit nájem', id: '3', isChecked: false },
 ];
 
 function App() {
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
 
   return (
     <>
+      <h2>To do</h2>
       {MOCK_DATA.map((i) => {
         return (
           <TodoItem
@@ -25,7 +23,7 @@ function App() {
           />
         );
       })}
-      <div>
+      {/* <div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
@@ -44,7 +42,7 @@ function App() {
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
-      </p>
+      </p> */}
     </>
   );
 }
