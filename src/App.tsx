@@ -1,14 +1,58 @@
+import { Heading } from '@chakra-ui/react';
 import { useState } from 'react';
+import type { TTodoItem } from '../types';
 import './App.css';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
+import { AddTodoForm } from './components/AddTodoForm';
+import { TodoItem } from './components/TodoItem';
+
+const MOCK_DATA: TTodoItem[] = [
+  {
+    title: 'Dojít na nákup',
+    description: 'Test descr',
+    id: '2',
+    isChecked: true,
+  },
+  {
+    title: 'Zaplatit nájem',
+    description: 'Test descr 2',
+    id: '3',
+    isChecked: false,
+  },
+];
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [todos, setTodos] = useState<TTodoItem[]>(MOCK_DATA);
 
   return (
     <>
-      <div>
+      <Heading size="3xl">Todo</Heading>
+
+      <AddTodoForm
+        onAddTodo={(item) => {
+          setTodos((prev) => [...prev, item]);
+          setTodos([...todos, item]);
+        }}
+      />
+
+      {todos.map((i) => {
+        return (
+          <TodoItem
+            key={i.id}
+            item={i}
+            onCheckedTodo={() => {
+              setTodos((prev) =>
+                prev.map((item) => {
+                  // return { ...item, isChecked: !item.isChecked };
+                  return item.id === i.id
+                    ? { ...item, isChecked: !item.isChecked }
+                    : item;
+                }),
+              );
+            }}
+          />
+        );
+      })}
+      {/* <div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
@@ -27,7 +71,7 @@ function App() {
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
-      </p>
+      </p> */}
     </>
   );
 }
