@@ -1,1 +1,6 @@
-export type TTodoItem = { id: string; title: string; isChecked: boolean };
+export type TTodoItem = {
+  id: string;
+  title: string;
+  description: string;
+  isChecked: boolean;
+};
