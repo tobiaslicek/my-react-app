@@ -1,18 +1,11 @@
-import {
-  Button,
-  Card,
-  CardBody,
-  Field,
-  Heading,
-  Input,
-  Stack,
-} from '@chakra-ui/react';
+import { Button, Card, CardBody, Heading, Stack } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import z from 'zod';
 import type { TTodoItem } from '../../types';
+import { FormInput } from './FormInput';
 type Props = { onAddTodo: (item: TTodoItem) => void };
 
 type TAddTodoForm = { name: string; description: string };
@@ -36,7 +29,6 @@ export const AddTodoForm = ({ onAddTodo }: Props) => {
     control,
     handleSubmit,
     watch,
-    formState: { errors },
     reset,
   } = useForm<TAddTodoForm>({
     defaultValues: DEFAULT_VALUES,
@@ -69,38 +61,20 @@ export const AddTodoForm = ({ onAddTodo }: Props) => {
         <CardBody>
           <Stack gap={4}>
             <Heading size="md">Add todo</Heading>
-
-            <Controller
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <Field.Root invalid={!!errors.name}>
-                  <Input
-                    placeholder="Název"
-                    variant="subtle"
-                    value={value}
-                    onChange={onChange}
-                  />
-                  {errors.name && (
-                    <Field.ErrorText>{errors.name.message}</Field.ErrorText>
-                  )}
-                </Field.Root>
-              )}
+            <FormInput
               name="name"
-            />
-
-            <Controller
+              title="TODO Název"
+              type="text"
               control={control}
-              render={({ field: { onChange, value } }) => (
-                <Input
-                  placeholder="Popis"
-                  variant="subtle"
-                  value={value}
-                  onChange={onChange}
-                />
-              )}
-              name="description"
+              placeholder="TODO 1"
             />
-
+            <FormInput
+              name="description"
+              title="TODO Popis"
+              type="text"
+              control={control}
+              placeholder="Tohle je popisek TODO 1"
+            />
             <Button onClick={handleSubmit(onSubmit)} colorPalette="black">
               Přidej {values.name} {values.description}
             </Button>
