@@ -8,6 +8,7 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react';
+import { useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTES } from '../constants';
 import type { TTodoItem } from '../../types';
@@ -34,7 +35,10 @@ const TodoDetail = () => {
   const navigate = useNavigate();
 
   // Najdeme todo item podle id
-  const todo = MOCK_DATA.find((item) => item.id === params.id);
+  const todo = useMemo(
+    () => MOCK_DATA.find((item) => item.id === params.id),
+    [params.id],
+  );
 
   // Pokud todo neexistuje, zobrazíme zprávu
   if (!todo) {
