@@ -1,9 +1,15 @@
-import { Heading } from '@chakra-ui/react';
-import { useState } from 'react';
-import type { TTodoItem } from '../types';
-import './App.css';
-import { AddTodoForm } from './components/AddTodoForm';
-import { TodoItem } from './components/TodoItem';
+import {
+  Alert,
+  Box,
+  Heading,
+  Spinner,
+  Text,
+} from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import { AddTodoForm } from '../components/AddTodoForm';
+import { TodoItem } from '../components/TodoItem';
+import type { TTodoItem } from '../../types';
+import { useGetPetById } from '../api/api';
 
 const MOCK_DATA: TTodoItem[] = [
   {
@@ -20,12 +26,49 @@ const MOCK_DATA: TTodoItem[] = [
   },
 ];
 
-function App() {
+function Todos() {
   const [todos, setTodos] = useState<TTodoItem[]>(MOCK_DATA);
+  const {data, isFetching, isError} = useGetPetById(2);
+  console.log(data);
 
   return (
     <>
       <Heading size="3xl">Todo</Heading>
+
+      {/* Sekce s daty z API (ukázka fetch + useEffect) */}
+      <Box mt={8} textAlign="left">
+        <Heading size="lg" mb={4}>
+          Pet z API (Swagger ukázka)
+        </Heading>
+
+        {isFetching && <Spinner />}
+
+        {isError && (
+          <Text mt={2}>
+            Nepodařilo se načíst data: {isError}
+          </Text>
+        )}
+
+        {data && !isFetching && !isError && (
+          <Box
+            mt={4}
+            p={4}
+            borderWidth="1px"
+            borderRadius="md"
+            bg="gray.50"
+          >
+            <Text>
+              <strong>ID:</strong> {data.id}
+            </Text>
+            <Text>
+              <strong>Jméno:</strong> {data.name}
+            </Text>
+            <Text>
+              <strong>Status:</strong> {data.status}
+            </Text>
+          </Box>
+        )}
+      </Box>
 
       <AddTodoForm
         onAddTodo={(item) => {
@@ -76,4 +119,4 @@ function App() {
   );
 }
 
-export default App;
+export default Todos;
