@@ -24,8 +24,8 @@ export const Header = () => {
           >
             Home
           </Button>
-          <Button variant="ghost" color="white">
-            About
+          <Button variant="ghost" color="white" onClick={() => navigate(ROUTES.petList)}>
+            Pet List
           </Button>
           <Button colorScheme="blue">Login</Button>
         </Flex>

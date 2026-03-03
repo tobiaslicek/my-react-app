@@ -1,7 +1,7 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { ROUTES } from './constants';
-import { NotFound, TodoDetail, Todos } from './pages';
+import { NotFound, PetDetail, PetList, TodoDetail, Todos } from './pages';
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +18,14 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.todoDetail,
         element: <TodoDetail />,
+      },
+      {
+        path: ROUTES.petList,
+        element: <PetList />,
+      },
+      {
+        path: ROUTES.petDetail,
+        element: <PetDetail />,
       },
       {
         path: '*',
